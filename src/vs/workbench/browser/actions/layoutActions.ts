@@ -217,14 +217,14 @@ export class ToggleSidebarPositionAction extends Action2 {
 
 registerAction2(ToggleSidebarPositionAction);
 
-const configureLayoutIcon = registerIcon('configure-layout-icon', Codicon.layout, localize('cofigureLayoutIcon', 'Icon represents workbench layout configuration.'));
-MenuRegistry.appendMenuItem(MenuId.LayoutControlMenu, {
-	submenu: MenuId.LayoutControlMenuSubmenu,
-	title: localize('configureLayout', "Configure Layout"),
-	icon: configureLayoutIcon,
-	group: '1_workbench_layout',
-	when: ContextKeyExpr.equals('config.workbench.layoutControl.type', 'menu')
-});
+// const configureLayoutIcon = registerIcon('configure-layout-icon', Codicon.layout, localize('cofigureLayoutIcon', 'Icon represents workbench layout configuration.'));
+// MenuRegistry.appendMenuItem(MenuId.LayoutControlMenu, {
+// 	submenu: MenuId.LayoutControlMenuSubmenu,
+// 	title: localize('configureLayout', "Configure Layout"),
+// 	icon: configureLayoutIcon,
+// 	group: '1_workbench_layout',
+// 	when: ContextKeyExpr.equals('config.workbench.layoutControl.type', 'menu')
+// });
 
 
 MenuRegistry.appendMenuItems([{
@@ -424,33 +424,34 @@ MenuRegistry.appendMenuItems([
 			},
 			order: 0
 		}
-	}, {
-		id: MenuId.LayoutControlMenu,
-		item: {
-			group: '0_workbench_toggles',
-			command: {
-				id: ToggleSidebarVisibilityAction.ID,
-				title: localize('toggleSideBar', "Toggle Primary Side Bar"),
-				icon: panelLeftIcon,
-				toggled: SideBarVisibleContext
-			},
-			when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'left')),
-			order: 0
-		}
-	}, {
-		id: MenuId.LayoutControlMenu,
-		item: {
-			group: '0_workbench_toggles',
-			command: {
-				id: ToggleSidebarVisibilityAction.ID,
-				title: localize('toggleSideBar', "Toggle Primary Side Bar"),
-				icon: panelRightIcon,
-				toggled: SideBarVisibleContext
-			},
-			when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'right')),
-			order: 2
-		}
-	}
+	},
+	// {
+	// 	id: MenuId.LayoutControlMenu,
+	// 	item: {
+	// 		group: '0_workbench_toggles',
+	// 		command: {
+	// 			id: ToggleSidebarVisibilityAction.ID,
+	// 			title: localize('toggleSideBar', "Toggle Primary Side Bar"),
+	// 			icon: panelLeftIcon,
+	// 			toggled: SideBarVisibleContext
+	// 		},
+	// 		when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'left')),
+	// 		order: 0
+	// 	}
+	// }, {
+	// 	id: MenuId.LayoutControlMenu,
+	// 	item: {
+	// 		group: '0_workbench_toggles',
+	// 		command: {
+	// 			id: ToggleSidebarVisibilityAction.ID,
+	// 			title: localize('toggleSideBar', "Toggle Primary Side Bar"),
+	// 			icon: panelRightIcon,
+	// 			toggled: SideBarVisibleContext
+	// 		},
+	// 		when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'right')),
+	// 		order: 2
+	// 	}
+	// }
 ]);
 
 // --- Toggle Statusbar Visibility
@@ -1186,136 +1187,136 @@ for (const { active } of [...ToggleVisibilityActions, ...MoveSideBarActions, ...
 	}
 }
 
-registerAction2(class CustomizeLayoutAction extends Action2 {
-	constructor() {
-		super({
-			id: 'workbench.action.customizeLayout',
-			title: localize('customizeLayout', "Customize Layout..."),
-			f1: true,
-			icon: configureLayoutIcon,
-			menu: [
-				{
-					id: MenuId.LayoutControlMenuSubmenu,
-					group: 'z_end',
-				},
-				{
-					id: MenuId.LayoutControlMenu,
-					when: ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both'),
-					group: 'z_end'
-				}
-			]
-		});
-	}
+// registerAction2(class CustomizeLayoutAction extends Action2 {
+// 	constructor() {
+// 		super({
+// 			id: 'workbench.action.customizeLayout',
+// 			title: localize('customizeLayout', "Customize Layout..."),
+// 			f1: true,
+// 			icon: configureLayoutIcon,
+// 			menu: [
+// 				{
+// 					id: MenuId.LayoutControlMenuSubmenu,
+// 					group: 'z_end',
+// 				},
+// 				{
+// 					id: MenuId.LayoutControlMenu,
+// 					when: ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both'),
+// 					group: 'z_end'
+// 				}
+// 			]
+// 		});
+// 	}
 
-	getItems(contextKeyService: IContextKeyService): (IQuickPickItem | IQuickPickSeparator)[] {
-		const toQuickPickItem = (item: CustomizeLayoutItem): IQuickPickItem => {
-			const toggled = item.active.evaluate(contextKeyService.getContext(null));
-			let label = item.useButtons ?
-				item.label :
-				item.label + (toggled && item.activeIcon ? ` $(${item.activeIcon.id})` : (!toggled && item.inactiveIcon ? ` $(${item.inactiveIcon.id})` : ''));
-			const ariaLabel =
-				item.label + (toggled && item.activeAriaLabel ? ` (${item.activeAriaLabel})` : (!toggled && item.inactiveAriaLabel ? ` (${item.inactiveAriaLabel})` : ''));
+// 	getItems(contextKeyService: IContextKeyService): (IQuickPickItem | IQuickPickSeparator)[] {
+// 		const toQuickPickItem = (item: CustomizeLayoutItem): IQuickPickItem => {
+// 			const toggled = item.active.evaluate(contextKeyService.getContext(null));
+// 			let label = item.useButtons ?
+// 				item.label :
+// 				item.label + (toggled && item.activeIcon ? ` $(${item.activeIcon.id})` : (!toggled && item.inactiveIcon ? ` $(${item.inactiveIcon.id})` : ''));
+// 			const ariaLabel =
+// 				item.label + (toggled && item.activeAriaLabel ? ` (${item.activeAriaLabel})` : (!toggled && item.inactiveAriaLabel ? ` (${item.inactiveAriaLabel})` : ''));
 
-			if (item.visualIcon) {
-				let icon = item.visualIcon;
-				if (isContextualLayoutVisualIcon(icon)) {
-					const useIconA = icon.whenA.evaluate(contextKeyService.getContext(null));
-					icon = useIconA ? icon.iconA : icon.iconB;
-				}
+// 			if (item.visualIcon) {
+// 				let icon = item.visualIcon;
+// 				if (isContextualLayoutVisualIcon(icon)) {
+// 					const useIconA = icon.whenA.evaluate(contextKeyService.getContext(null));
+// 					icon = useIconA ? icon.iconA : icon.iconB;
+// 				}
 
-				label = `$(${icon.id}) ${label}`;
-			}
+// 				label = `$(${icon.id}) ${label}`;
+// 			}
 
-			return {
-				type: 'item',
-				id: item.id,
-				label,
-				ariaLabel,
-				buttons: !item.useButtons ? undefined : [
-					{
-						alwaysVisible: false,
-						tooltip: ariaLabel,
-						iconClass: toggled ? item.activeIcon.classNames : item.inactiveIcon?.classNames
-					}
-				]
-			};
-		};
-		return [
-			{
-				type: 'separator',
-				label: localize('toggleVisibility', "Visibility")
-			},
-			...ToggleVisibilityActions.map(toQuickPickItem),
-			{
-				type: 'separator',
-				label: localize('sideBarPosition', "Primary Side Bar Position")
-			},
-			...MoveSideBarActions.map(toQuickPickItem),
-			{
-				type: 'separator',
-				label: localize('panelAlignment', "Panel Alignment")
-			},
-			...AlignPanelActions.map(toQuickPickItem),
-			{
-				type: 'separator',
-				label: localize('layoutModes', "Modes"),
-			},
-			...MiscLayoutOptions.map(toQuickPickItem),
-		];
-	}
+// 			return {
+// 				type: 'item',
+// 				id: item.id,
+// 				label,
+// 				ariaLabel,
+// 				buttons: !item.useButtons ? undefined : [
+// 					{
+// 						alwaysVisible: false,
+// 						tooltip: ariaLabel,
+// 						iconClass: toggled ? item.activeIcon.classNames : item.inactiveIcon?.classNames
+// 					}
+// 				]
+// 			};
+// 		};
+// 		return [
+// 			{
+// 				type: 'separator',
+// 				label: localize('toggleVisibility', "Visibility")
+// 			},
+// 			...ToggleVisibilityActions.map(toQuickPickItem),
+// 			{
+// 				type: 'separator',
+// 				label: localize('sideBarPosition', "Primary Side Bar Position")
+// 			},
+// 			...MoveSideBarActions.map(toQuickPickItem),
+// 			{
+// 				type: 'separator',
+// 				label: localize('panelAlignment', "Panel Alignment")
+// 			},
+// 			...AlignPanelActions.map(toQuickPickItem),
+// 			{
+// 				type: 'separator',
+// 				label: localize('layoutModes', "Modes"),
+// 			},
+// 			...MiscLayoutOptions.map(toQuickPickItem),
+// 		];
+// 	}
 
-	run(accessor: ServicesAccessor): void {
-		const contextKeyService = accessor.get(IContextKeyService);
-		const commandService = accessor.get(ICommandService);
-		const quickInputService = accessor.get(IQuickInputService);
-		const quickPick = quickInputService.createQuickPick();
-		quickPick.items = this.getItems(contextKeyService);
-		quickPick.ignoreFocusOut = true;
-		quickPick.hideInput = true;
-		quickPick.title = localize('customizeLayoutQuickPickTitle', "Customize Layout");
+// 	run(accessor: ServicesAccessor): void {
+// 		const contextKeyService = accessor.get(IContextKeyService);
+// 		const commandService = accessor.get(ICommandService);
+// 		const quickInputService = accessor.get(IQuickInputService);
+// 		const quickPick = quickInputService.createQuickPick();
+// 		quickPick.items = this.getItems(contextKeyService);
+// 		quickPick.ignoreFocusOut = true;
+// 		quickPick.hideInput = true;
+// 		quickPick.title = localize('customizeLayoutQuickPickTitle', "Customize Layout");
 
-		quickPick.buttons = [
-			{
-				alwaysVisible: true,
-				iconClass: Codicon.close.classNames,
-				tooltip: localize('close', "Close")
-			}
-		];
+// 		quickPick.buttons = [
+// 			{
+// 				alwaysVisible: true,
+// 				iconClass: Codicon.close.classNames,
+// 				tooltip: localize('close', "Close")
+// 			}
+// 		];
 
-		const disposables = new DisposableStore();
-		let selectedItem: CustomizeLayoutItem | undefined = undefined;
-		disposables.add(contextKeyService.onDidChangeContext(changeEvent => {
-			if (changeEvent.affectsSome(LayoutContextKeySet)) {
-				quickPick.items = this.getItems(contextKeyService);
-				if (selectedItem) {
-					quickPick.activeItems = quickPick.items.filter(item => (item as CustomizeLayoutItem).id === selectedItem?.id) as IQuickPickItem[];
-				}
+// 		const disposables = new DisposableStore();
+// 		let selectedItem: CustomizeLayoutItem | undefined = undefined;
+// 		disposables.add(contextKeyService.onDidChangeContext(changeEvent => {
+// 			if (changeEvent.affectsSome(LayoutContextKeySet)) {
+// 				quickPick.items = this.getItems(contextKeyService);
+// 				if (selectedItem) {
+// 					quickPick.activeItems = quickPick.items.filter(item => (item as CustomizeLayoutItem).id === selectedItem?.id) as IQuickPickItem[];
+// 				}
 
-				setTimeout(() => quickInputService.focus(), 0);
-			}
-		}));
+// 				setTimeout(() => quickInputService.focus(), 0);
+// 			}
+// 		}));
 
-		quickPick.onDidAccept(event => {
-			if (quickPick.selectedItems.length) {
-				selectedItem = quickPick.selectedItems[0] as CustomizeLayoutItem;
-				commandService.executeCommand(selectedItem.id);
-			}
-		});
+// 		quickPick.onDidAccept(event => {
+// 			if (quickPick.selectedItems.length) {
+// 				selectedItem = quickPick.selectedItems[0] as CustomizeLayoutItem;
+// 				commandService.executeCommand(selectedItem.id);
+// 			}
+// 		});
 
-		quickPick.onDidTriggerItemButton(event => {
-			if (event.item) {
-				selectedItem = event.item as CustomizeLayoutItem;
-				commandService.executeCommand(selectedItem.id);
-			}
-		});
+// 		quickPick.onDidTriggerItemButton(event => {
+// 			if (event.item) {
+// 				selectedItem = event.item as CustomizeLayoutItem;
+// 				commandService.executeCommand(selectedItem.id);
+// 			}
+// 		});
 
-		// Only one button, close
-		quickPick.onDidTriggerButton(() => {
-			quickPick.hide();
-		});
+// 		// Only one button, close
+// 		quickPick.onDidTriggerButton(() => {
+// 			quickPick.hide();
+// 		});
 
-		quickPick.onDispose(() => disposables.dispose());
+// 		quickPick.onDispose(() => disposables.dispose());
 
-		quickPick.show();
-	}
-});
+// 		quickPick.show();
+// 	}
+// });

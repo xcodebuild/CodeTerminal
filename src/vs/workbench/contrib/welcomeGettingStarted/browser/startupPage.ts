@@ -9,6 +9,8 @@ import * as arrays from 'vs/base/common/arrays';
 import { IWorkbenchContribution } from 'vs/workbench/common/contributions';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalLocation } from 'vs/platform/terminal/common/terminal';
 import { onUnexpectedError } from 'vs/base/common/errors';
 import { IWorkspaceContextService, WorkbenchState } from 'vs/platform/workspace/common/workspace';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
@@ -17,8 +19,9 @@ import { ILifecycleService, StartupKind } from 'vs/workbench/services/lifecycle/
 import { IFileService } from 'vs/platform/files/common/files';
 import { joinPath } from 'vs/base/common/resources';
 import { IEditorOptions } from 'vs/platform/editor/common/editor';
-import { IWorkbenchLayoutService } from 'vs/workbench/services/layout/browser/layoutService';
+import { IWorkbenchLayoutService, Parts } from 'vs/workbench/services/layout/browser/layoutService';
 import { GettingStartedInput, gettingStartedInputTypeId } from 'vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedInput';
+
 import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
 import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { getTelemetryLevel } from 'vs/platform/telemetry/common/telemetryUtils';
@@ -38,6 +41,7 @@ export class StartupPageContribution implements IWorkbenchContribution {
 		@IInstantiationService private readonly instantiationService: IInstantiationService,
 		@IConfigurationService private readonly configurationService: IConfigurationService,
 		@IEditorService private readonly editorService: IEditorService,
+		@ITerminalService private readonly terminalService: ITerminalService,
 		@IWorkingCopyBackupService private readonly workingCopyBackupService: IWorkingCopyBackupService,
 		@IFileService private readonly fileService: IFileService,
 		@IWorkspaceContextService private readonly contextService: IWorkspaceContextService,
@@ -48,11 +52,13 @@ export class StartupPageContribution implements IWorkbenchContribution {
 		@IWorkbenchEnvironmentService private readonly environmentService: IWorkbenchEnvironmentService,
 		@IStorageService private readonly storageService: IStorageService
 	) {
-		this.run().then(undefined, onUnexpectedError);
+		this.init();
+
+		console.log(this.run);
+		// this.run().then(undefined, onUnexpectedError);
 	}
 
 	private async run() {
-
 		// Always open Welcome page for first-launch, no matter what is open or which startupEditor is set.
 		if (
 			this.productService.enableTelemetry
@@ -138,6 +144,23 @@ export class StartupPageContribution implements IWorkbenchContribution {
 			}
 		}
 	}
+
+	private async init(showTelemetryNotice?: boolean) {
+		const layoutService = this.layoutService;
+		layoutService.setPartHidden(true, Parts.ACTIVITYBAR_PART);
+
+		const configurationService = this.configurationService;
+
+		await configurationService.updateValue('workbench.statusBar.visible', false);
+		await configurationService.updateValue('workbench.tips.enabled', false);
+
+		await layoutService.toggleMaximizedPanel();
+		const terminalService = this.terminalService;
+		const options = { location: TerminalLocation.Panel };
+		const instance = await terminalService.createTerminal(options);
+		instance.focusWhenReady();
+	}
+
 
 	private async openGettingStarted(showTelemetryNotice?: boolean) {
 		const startupEditorTypeID = gettingStartedInputTypeId;

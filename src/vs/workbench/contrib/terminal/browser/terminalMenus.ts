@@ -325,7 +325,44 @@ export function setupTerminalMenus(): void {
 					},
 					group: ContextMenuGroup.Create
 				}
-			}
+			},
+			// buttons in titlebar
+			{
+				id: MenuId.LayoutControlMenu,
+				item: {
+					order: 0,
+					command: {
+						id: TerminalCommandId.New,
+						title: localize('workbench.action.terminal.new.short', "New Terminal"),
+						icon: Codicon.plus,
+					},
+					group: ContextMenuGroup.Create
+				}
+			},
+			{
+				id: MenuId.LayoutControlMenu,
+				item: {
+					order: 1,
+					command: {
+						id: TerminalCommandId.NewWithProfile,
+						title: localize('workbench.action.terminal.newWithProfile.short', "New Terminal With Profile"),
+						icon: Codicon.chevronDown,
+					},
+					group: ContextMenuGroup.Create
+				}
+			},
+			{
+				id: MenuId.LayoutControlMenu,
+				item: {
+					order: 2,
+					command: {
+						id: TerminalCommandId.Split,
+						title: terminalStrings.split,
+						icon: Codicon.splitHorizontal
+					},
+					group: ContextMenuGroup.Create
+				}
+			},
 		]
 	);
 

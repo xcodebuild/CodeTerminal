@@ -218,3 +218,18 @@
 	display: inline-block;
 	transform: rotate(90deg);
 }
+
+.monaco-workbench .monaco-action-bar [role="tab"] {
+	display: none !important;
+}
+
+.monaco-workbench .basepanel .composite.title {
+	display: none !important;
+}
+
+/* .monaco-workbench .basepanel .content, .xterm-screen, .monaco-workbench .basepanel{
+	height: 100% !important;
+}
+.terminal.xterm {
+	height: 98% !important;
+} */

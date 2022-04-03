@@ -437,20 +437,22 @@ MenuRegistry.appendMenuItems([
 			},
 			order: 4
 		}
-	}, {
-		id: MenuId.LayoutControlMenu,
-		item: {
-			group: '0_workbench_toggles',
-			command: {
-				id: TogglePanelAction.ID,
-				title: localize('togglePanel', "Toggle Panel"),
-				icon: panelIcon,
-				toggled: PanelVisibleContext
-			},
-			when: ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')),
-			order: 1
-		}
-	}, {
+	},
+	// {
+	// 	id: MenuId.LayoutControlMenu,
+	// 	item: {
+	// 		group: '0_workbench_toggles',
+	// 		command: {
+	// 			id: TogglePanelAction.ID,
+	// 			title: localize('togglePanel', "Toggle Panel"),
+	// 			icon: panelIcon,
+	// 			toggled: PanelVisibleContext
+	// 		},
+	// 		when: ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')),
+	// 		order: 1
+	// 	}
+	// },
+	{
 		id: MenuId.ViewTitleContext,
 		item: {
 			group: '3_workbench_layout_move',

@@ -675,7 +675,8 @@ export abstract class BasePanelPart extends CompositePart<PaneComposite> impleme
 			return;
 		}
 
-		this.contentDimension = new Dimension(width, height);
+		// code-terminal: add origin tab bar height
+		this.contentDimension = new Dimension(width, height + 30);
 
 		// Layout contents
 		super.layout(this.contentDimension.width, this.contentDimension.height, top, left);

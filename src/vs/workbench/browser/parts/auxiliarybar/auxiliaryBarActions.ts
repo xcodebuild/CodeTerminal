@@ -80,34 +80,34 @@ MenuRegistry.appendMenuItems([
 			order: 2
 		}
 	},
-	{
-		id: MenuId.LayoutControlMenu,
-		item: {
-			group: '0_workbench_toggles',
-			command: {
-				id: ToggleAuxiliaryBarAction.ID,
-				title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
-				toggled: AuxiliaryBarVisibleContext,
-				icon: auxiliaryBarLeftIcon,
-			},
-			when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'right')),
-			order: 0
-		}
-	},
-	{
-		id: MenuId.LayoutControlMenu,
-		item: {
-			group: '0_workbench_toggles',
-			command: {
-				id: ToggleAuxiliaryBarAction.ID,
-				title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
-				toggled: AuxiliaryBarVisibleContext,
-				icon: auxiliaryBarRightIcon,
-			},
-			when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'left')),
-			order: 2
-		}
-	},
+	// {
+	// 	id: MenuId.LayoutControlMenu,
+	// 	item: {
+	// 		group: '0_workbench_toggles',
+	// 		command: {
+	// 			id: ToggleAuxiliaryBarAction.ID,
+	// 			title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
+	// 			toggled: AuxiliaryBarVisibleContext,
+	// 			icon: auxiliaryBarLeftIcon,
+	// 		},
+	// 		when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'right')),
+	// 		order: 0
+	// 	}
+	// },
+	// {
+	// 	id: MenuId.LayoutControlMenu,
+	// 	item: {
+	// 		group: '0_workbench_toggles',
+	// 		command: {
+	// 			id: ToggleAuxiliaryBarAction.ID,
+	// 			title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
+	// 			toggled: AuxiliaryBarVisibleContext,
+	// 			icon: auxiliaryBarRightIcon,
+	// 		},
+	// 		when: ContextKeyExpr.and(ContextKeyExpr.or(ContextKeyExpr.equals('config.workbench.layoutControl.type', 'toggles'), ContextKeyExpr.equals('config.workbench.layoutControl.type', 'both')), ContextKeyExpr.equals('config.workbench.sideBar.location', 'left')),
+	// 		order: 2
+	// 	}
+	// },
 	{
 		id: MenuId.MenubarAppearanceMenu,
 		item: {

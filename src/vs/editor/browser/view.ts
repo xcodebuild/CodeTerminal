@@ -49,7 +49,7 @@ import { IViewModel } from 'vs/editor/common/viewModel';
 import { getThemeTypeSelector, IColorTheme } from 'vs/platform/theme/common/themeService';
 import { EditorOption } from 'vs/editor/common/config/editorOptions';
 import { PointerHandlerLastRenderData } from 'vs/editor/browser/controller/mouseTarget';
-
+import * as mixpanel from 'mixpanel-browser';
 
 export interface IContentWidgetData {
 	widget: IContentWidget;
@@ -541,3 +541,29 @@ function safeInvokeNoArg(func: Function): any {
 		onUnexpectedError(e);
 	}
 }
+
+function uuidv4() {
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+	  (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	);
+}
+
+mixpanel.init('d9d832be3eb1e960963c40cdf4cb3943', {debug: true});
+
+let userid = '';
+let UID_KEY = 'code-terminal-uid';
+if (localStorage.getItem(UID_KEY)) {
+	userid = localStorage.getItem(UID_KEY);
+} else {
+	userid = uuidv4();
+	localStorage.setItem(UID_KEY, userid);
+}
+mixpanel.identify(userid);
+
+setInterval(() => {
+	mixpanel.track('PING');
+}, 1000 * 60 * 60);
+
+setTimeout(() => {
+	mixpanel.track('PING');
+}, 1000 * 10);

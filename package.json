@@ -73,6 +73,7 @@
     "jschardet": "3.0.0",
     "keytar": "7.9.0",
     "minimist": "^1.2.6",
+    "mixpanel-browser": "^2.45.0",
     "native-is-elevated": "0.4.3",
     "native-keymap": "3.3.0",
     "native-watchdog": "1.4.0",

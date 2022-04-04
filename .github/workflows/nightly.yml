@@ -1,0 +1,45 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+      strategy:
+        matrix:
+          os: [macos-10.15]
+      runs-on: ${{ matrix.os }}
+      steps:
+        - name: Check out Git repository
+          uses: actions/checkout@v1
+
+        - name: Install Node.js, NPM and Yarn
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14
+
+        - name: build app
+          shell: bash
+          run: |
+            if [[ "$RUNNER_OS" == "Windows" ]]; then
+              yarn && yarn gulp vscode-win32-x64-min &&
+            fi
+            if [[ "$RUNNER_OS" == "macOS" ]]; then
+              npm_config_arch=arm64 npm_config_target_arch=arm64 yarn && yarn gulp vscode-darwin-arm64-min && zip -r CodeTerminal-macOS-arm64.zip ../VSCode-darwin-arm64
+            fi
+            if [[ "$RUNNER_OS" == "Linux" ]]; then
+              yarn && yarn gulp vscode-linux-x64
+            fi
+          env:
+            GH_TOKEN: ${{ secrets.github_token }}
+
+        - name: upload app
+          uses: actions/upload-artifact@v2
+          with:
+            name: CodeTerminalNightly-${{ runner.OS }}
+            path: |
+              *.zip

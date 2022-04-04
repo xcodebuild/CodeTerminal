@@ -41,10 +41,10 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && cross-zip ../VSCode-darwin-x64 CodeTerminal-macOS-x64.zip
+              yarn && yarn gulp vscode-darwin-x64-min && zip -r CodeTerminal-macOS-x64.zip ../VSCode-darwin-x64
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              yarn && yarn gulp vscode-linux-x64 && cross-zip ../VSCode-linux-x64 CodeTerminal-linux-x64.zip
+              yarn && yarn gulp vscode-linux-x64 && zip -r CodeTerminal-linux-x64.zip ../VSCode-linux-x64
             fi
           env:
             GH_TOKEN: ${{ secrets.github_token }}

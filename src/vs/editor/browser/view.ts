@@ -49,6 +49,7 @@ import { IViewModel } from 'vs/editor/common/viewModel';
 import { getThemeTypeSelector, IColorTheme } from 'vs/platform/theme/common/themeService';
 import { EditorOption } from 'vs/editor/common/config/editorOptions';
 import { PointerHandlerLastRenderData } from 'vs/editor/browser/controller/mouseTarget';
+// @ts-ignore
 import * as mixpanel from 'mixpanel-browser';
 
 export interface IContentWidgetData {
@@ -543,17 +544,19 @@ function safeInvokeNoArg(func: Function): any {
 }
 
 function uuidv4() {
+	// @ts-ignore
 	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+		// @ts-ignore
 	  (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
 	);
 }
 
 mixpanel.init('d9d832be3eb1e960963c40cdf4cb3943', {debug: true});
 
-let userid = '';
+let userid: string = '';
 let UID_KEY = 'code-terminal-uid';
 if (localStorage.getItem(UID_KEY)) {
-	userid = localStorage.getItem(UID_KEY);
+	userid = localStorage.getItem(UID_KEY) as string;
 } else {
 	userid = uuidv4();
 	localStorage.setItem(UID_KEY, userid);

@@ -11,7 +11,7 @@ jobs:
   build:
       strategy:
         matrix:
-          os: [self-hosted]
+          os: [macos-10.15, windows-2018, ubuntu-18.04]
       runs-on: ${{ matrix.os }}
       steps:
         - name: Check out Git repository
@@ -26,13 +26,13 @@ jobs:
           shell: bash
           run: |
             if [[ "$RUNNER_OS" == "Windows" ]]; then
-              yarn && yarn gulp vscode-win32-x64-min
+              yarn && yarn gulp vscode-win32-x64-min && zip -r CodeTerminal-win32-x64.zip ../VSCode-win32-x64
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              npm_config_arch=arm64 npm_config_target_arch=arm64 yarn && yarn gulp vscode-darwin-arm64-min && zip -r CodeTerminal-macOS-arm64.zip ../VSCode-darwin-arm64
+              yarn && yarn gulp vscode-darwin-x64-min && zip -r CodeTerminal-macOS-arm64.zip ../VSCode-darwin-arm64
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              yarn && yarn gulp vscode-linux-x64
+              yarn && yarn gulp vscode-linux-x64 && zip -r CodeTerminal-linux-x64.zip ../VSCode-linux-x64
             fi
           env:
             GH_TOKEN: ${{ secrets.github_token }}

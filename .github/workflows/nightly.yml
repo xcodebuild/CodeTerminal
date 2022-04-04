@@ -11,7 +11,7 @@ jobs:
   build:
       strategy:
         matrix:
-          os: [terminal-code-builder-my]
+          os: [self-hosted]
       runs-on: ${{ matrix.os }}
       steps:
         - name: Check out Git repository

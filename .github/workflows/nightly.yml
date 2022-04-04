@@ -29,7 +29,7 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && zip -r CodeTerminal-win32-x64.zip ../VSCode-win32-x64
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && zip -r CodeTerminal-macOS-arm64.zip ../VSCode-darwin-arm64
+              yarn && yarn gulp vscode-darwin-x64-min && zip -r CodeTerminal-macOS-x64.zip ../VSCode-darwin-x64
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
               yarn && yarn gulp vscode-linux-x64 && zip -r CodeTerminal-linux-x64.zip ../VSCode-linux-x64

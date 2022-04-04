@@ -11,7 +11,7 @@ jobs:
   build:
       strategy:
         matrix:
-          os: [macos-10.15, windows-2018, ubuntu-18.04]
+          os: [macos-10.15, windows-2022, ubuntu-18.04]
       runs-on: ${{ matrix.os }}
       steps:
         - name: Check out Git repository

@@ -26,7 +26,7 @@ jobs:
           shell: bash
           run: |
             if [[ "$RUNNER_OS" == "Windows" ]]; then
-              yarn && yarn gulp vscode-win32-x64-min &&
+              yarn && yarn gulp vscode-win32-x64-min
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
               npm_config_arch=arm64 npm_config_target_arch=arm64 yarn && yarn gulp vscode-darwin-arm64-min && zip -r CodeTerminal-macOS-arm64.zip ../VSCode-darwin-arm64

@@ -22,17 +22,23 @@ jobs:
           with:
             node-version: 14
 
+        - name: Install global deps
+          shell: bash
+          run: |
+            npm install -g cross-zip-cli
+            npm install -g windows-build-tools
+
         - name: build app
           shell: bash
           run: |
             if [[ "$RUNNER_OS" == "Windows" ]]; then
-              yarn && yarn gulp vscode-win32-x64-min && zip -r CodeTerminal-win32-x64.zip ../VSCode-win32-x64
+              yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && zip -r CodeTerminal-macOS-x64.zip ../VSCode-darwin-x64
+              yarn && yarn gulp vscode-darwin-x64-min && cross-zip ../VSCode-darwin-x64 CodeTerminal-macOS-x64.zip
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              yarn && yarn gulp vscode-linux-x64 && zip -r CodeTerminal-linux-x64.zip ../VSCode-linux-x64
+              yarn && yarn gulp vscode-linux-x64 && cross-zip ../VSCode-linux-x64 CodeTerminal-linux-x64.zip
             fi
           env:
             GH_TOKEN: ${{ secrets.github_token }}

@@ -24,6 +24,7 @@ import { Action2, IAction2Options, MenuId } from 'vs/platform/actions/common/act
 import { CATEGORIES } from 'vs/workbench/common/actions';
 import { KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import { KeybindingWeight } from 'vs/platform/keybinding/common/keybindingsRegistry';
+import { ITerminalGroupService, ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
 
 export class CloseWindowAction extends Action2 {
 
@@ -53,9 +54,19 @@ export class CloseWindowAction extends Action2 {
 	}
 
 	override async run(accessor: ServicesAccessor): Promise<void> {
-		const nativeHostService = accessor.get(INativeHostService);
+		// const nativeHostService = accessor.get(INativeHostService);
 
-		return nativeHostService.closeWindow();
+		// return nativeHostService.closeWindow();
+		const terminalGroupService = accessor.get(ITerminalGroupService);
+		const terminalService = accessor.get(ITerminalService);
+		const instance = terminalGroupService.activeInstance;
+		if (!instance) {
+			return;
+		}
+		await terminalService.safeDisposeTerminal(instance);
+		if (terminalGroupService.instances.length > 0) {
+			await terminalGroupService.showPanel(true);
+		}
 	}
 }
 

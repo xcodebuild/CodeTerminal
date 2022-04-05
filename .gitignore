@@ -16,3 +16,4 @@ vscode.lsif
 vscode.db
 /.profile-oss
 node_modules_arm
+node_modules_x86

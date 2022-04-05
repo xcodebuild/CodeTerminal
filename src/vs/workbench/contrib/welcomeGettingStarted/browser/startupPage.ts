@@ -155,6 +155,7 @@ export class StartupPageContribution implements IWorkbenchContribution {
 		await configurationService.updateValue('workbench.tips.enabled', false);
 
 		await layoutService.toggleMaximizedPanel();
+		setTimeout(() => layoutService.toggleMaximizedPanel(), 1000);
 		const terminalService = this.terminalService;
 		const options = { location: TerminalLocation.Panel };
 		const instance = await terminalService.createTerminal(options);

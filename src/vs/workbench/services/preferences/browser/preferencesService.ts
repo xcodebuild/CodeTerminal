@@ -46,6 +46,7 @@ import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteA
 import { ITextEditorService } from 'vs/workbench/services/textfile/common/textEditorService';
 import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
 import { isArray, isObject } from 'vs/base/common/types';
+import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
 
 const emptyEditableSettingsContent = '{\n}';
 
@@ -77,7 +78,8 @@ export class PreferencesService extends Disposable implements IPreferencesServic
 		@ILabelService private readonly labelService: ILabelService,
 		@IRemoteAgentService private readonly remoteAgentService: IRemoteAgentService,
 		@ICommandService private readonly commandService: ICommandService,
-		@ITextEditorService private readonly textEditorService: ITextEditorService
+		@ITextEditorService private readonly textEditorService: ITextEditorService,
+		@IUriIdentityService private readonly uriService: IUriIdentityService,
 	) {
 		super();
 		// The default keybindings.json updates based on keyboard layouts, so here we make sure
@@ -236,9 +238,13 @@ export class PreferencesService extends Disposable implements IPreferencesServic
 			jsonEditor: options.jsonEditor ?? this.shouldOpenJsonByDefault()
 		};
 
-		return options.jsonEditor ?
-			this.openSettingsJson(settingsResource, options) :
-			this.openSettings2(options);
+		const {
+			fsPath,
+		} = settingsResource;
+		return this.commandService.executeCommand('revealFileInOS', this.uriService.asCanonicalUri(URI.file(fsPath)));
+		// return options.jsonEditor ?
+		// 	this.openSettingsJson(settingsResource, options) :
+		// 	this.openSettings2(options);
 	}
 
 	private async openSettings2(options: IOpenSettingsOptions): Promise<IEditorPane> {

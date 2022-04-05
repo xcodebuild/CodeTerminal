@@ -2,7 +2,8 @@
 
 Standalone terminal from Visual Studio Code.
 
-![](./preview.jpg)
+![](https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/73a29f9dedeeec6cc8f22780040c9d252570f98d.png)
+
 
 ## Installation
 

@@ -12,9 +12,9 @@ Download from [https://nightly.link/xcodebuild/CodeTerminal/workflows/nightly/ma
 Or join group.
 
 ## 微信群
-![](https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/e2bda3ff6798bdb24200474f648143c6b3e8655f.jpg)
+![](https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/e2bda3ff6798bdb24200474f648143c6b3e8655f.jpg_180x180)
 
 ## Telegram Group
 
-![](https://t.me/+y3WJL1jz2FIyNDI9)
+[Join Telegram Group](https://t.me/+y3WJL1jz2FIyNDI9)
 

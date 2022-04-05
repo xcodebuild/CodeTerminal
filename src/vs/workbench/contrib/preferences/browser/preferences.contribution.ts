@@ -43,8 +43,6 @@ import { LifecyclePhase } from 'vs/workbench/services/lifecycle/common/lifecycle
 import { KeybindingsEditorInput } from 'vs/workbench/services/preferences/browser/keybindingsEditorInput';
 import { IPreferencesService } from 'vs/workbench/services/preferences/common/preferences';
 import { SettingsEditor2Input } from 'vs/workbench/services/preferences/common/preferencesEditorInput';
-import { ILayoutService } from 'vs/platform/layout/browser/layoutService';
-import { IWorkbenchLayoutService } from 'vs/workbench/services/layout/browser/layoutService';
 
 const SETTINGS_EDITOR_COMMAND_SEARCH = 'settings.action.search';
 

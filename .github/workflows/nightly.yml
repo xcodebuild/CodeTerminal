@@ -26,7 +26,6 @@ jobs:
           shell: bash
           run: |
             npm install -g cross-zip-cli
-            npm install -g @ffflorian/jszip-cli
 
         - name: Patch node gyp on Windows
           if: ${{ runner.os == 'Windows' }}
@@ -42,13 +41,25 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && jszip-cli add --output CodeTerminal-macOS-x64.zip ../VSCode-darwin-x64
+              yarn && yarn gulp vscode-darwin-x64-min
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              yarn && yarn gulp vscode-linux-x64 && jszip-cli add --output CodeTerminal-linux-x64.zip ../VSCode-linux-x64
+              yarn && yarn gulp vscode-linux-x64-min
             fi
           env:
-            GH_TOKEN: ${{ secrets.github_token }}
+            GH_TOKEN: ${{ secrets.github_token }}A
+
+        - name: compress app
+          uses: edgarrc/action-7z@v1
+          if: ${{ runner.os == 'macOS' }}
+          with:
+            args: 7z a -t7z -mx=9 CodeTerminal-macOS-x64.7z ../VSCode-darwin-x64
+
+        - name: compress app
+          uses: edgarrc/action-7z@v1
+          if: ${{ runner.os == 'Linux' }}
+          with:
+            args: 7z a -t7z -mx=9 CodeTerminal-linux-x64.7z ../VSCode-linux-x64
 
         - name: upload app
           uses: actions/upload-artifact@v2
@@ -56,3 +67,4 @@ jobs:
             name: CodeTerminalNightly-${{ runner.OS }}
             path: |
               *.zip
+              *.7z

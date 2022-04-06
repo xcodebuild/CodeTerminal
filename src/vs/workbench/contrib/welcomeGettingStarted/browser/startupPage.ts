@@ -149,6 +149,8 @@ export class StartupPageContribution implements IWorkbenchContribution {
 		const layoutService = this.layoutService;
 		layoutService.setPartHidden(true, Parts.ACTIVITYBAR_PART);
 
+		this.commandService.executeCommand('workbench.action.closeAllGroups');
+
 		const configurationService = this.configurationService;
 
 		await configurationService.updateValue('workbench.statusBar.visible', false);

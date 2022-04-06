@@ -371,9 +371,8 @@ class ToggleSidebarVisibilityAction extends Action2 {
 	}
 
 	run(accessor: ServicesAccessor): void {
-		const layoutService = accessor.get(IWorkbenchLayoutService);
-
-		layoutService.setPartHidden(layoutService.isVisible(Parts.SIDEBAR_PART), Parts.SIDEBAR_PART);
+		// const layoutService = accessor.get(IWorkbenchLayoutService);
+		// layoutService.setPartHidden(layoutService.isVisible(Parts.SIDEBAR_PART), Parts.SIDEBAR_PART);
 	}
 }
 

@@ -14,7 +14,7 @@ import { IModelService } from 'vs/editor/common/services/model';
 import { ILanguageService } from 'vs/editor/common/languages/language';
 import { IQuickInputService, IQuickInputButton } from 'vs/platform/quickinput/common/quickInput';
 import { getIconClasses } from 'vs/editor/common/services/getIconClasses';
-import { ICommandHandler } from 'vs/platform/commands/common/commands';
+import { ICommandHandler, ICommandService } from 'vs/platform/commands/common/commands';
 import { ServicesAccessor } from 'vs/platform/instantiation/common/instantiation';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { INativeHostService } from 'vs/platform/native/electron-sandbox/native';
@@ -25,6 +25,7 @@ import { CATEGORIES } from 'vs/workbench/common/actions';
 import { KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import { KeybindingWeight } from 'vs/platform/keybinding/common/keybindingsRegistry';
 import { ITerminalGroupService, ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalCommandId } from 'vs/workbench/contrib/terminal/common/terminal';
 
 export class CloseWindowAction extends Action2 {
 
@@ -62,6 +63,12 @@ export class CloseWindowAction extends Action2 {
 		const instance = terminalGroupService.activeInstance;
 		if (!instance) {
 			return;
+		}
+
+		if (terminalGroupService.instances.length === 1) {
+			// one instance, new one then kill
+			const commandService = accessor.get(ICommandService);
+			await commandService.executeCommand(TerminalCommandId.New);
 		}
 		await terminalService.safeDisposeTerminal(instance);
 		if (terminalGroupService.instances.length > 0) {

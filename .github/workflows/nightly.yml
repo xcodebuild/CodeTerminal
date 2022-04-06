@@ -26,6 +26,7 @@ jobs:
           shell: bash
           run: |
             npm install -g cross-zip-cli
+            npm install -g 7zip-bin
 
         - name: Patch node gyp on Windows
           if: ${{ runner.os == 'Windows' }}
@@ -41,33 +42,13 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min
+              yarn && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS.7z ../VSCode-darwin-x64
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              yarn && yarn gulp vscode-linux-x64-min
+              yarn && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
             fi
           env:
             GH_TOKEN: ${{ secrets.github_token }}A
-
-        - name: Compress action step
-          uses: a7ul/tar-action@v1.1.0
-          if: ${{ runner.os == 'macOS' }}
-          with:
-            command: c
-            cwd: ./
-            files: |
-              ../VSCode-darwin-x64
-            outPath: CodeTerminalNightly-macOS.tar.gz
-
-        - name: Compress action step
-          uses: a7ul/tar-action@v1.1.0
-          if: ${{ runner.os == 'Linux' }}
-          with:
-            command: c
-            cwd: ./
-            files: |
-              ../VSCode-linux-x64
-            outPath: CodeTerminalNightly-Linux.tar.gz
 
         - name: upload app
           uses: actions/upload-artifact@v2

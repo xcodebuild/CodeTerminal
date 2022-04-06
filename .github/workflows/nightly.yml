@@ -52,7 +52,6 @@ jobs:
         - name: Compress action step
           uses: a7ul/tar-action@v1.1.0
           if: ${{ runner.os == 'macOS' }}
-          id: compress
           with:
             command: c
             cwd: ./
@@ -63,7 +62,6 @@ jobs:
         - name: Compress action step
           uses: a7ul/tar-action@v1.1.0
           if: ${{ runner.os == 'Linux' }}
-          id: compress
           with:
             command: c
             cwd: ./

@@ -53,13 +53,13 @@ jobs:
           uses: edgarrc/action-7z@v1
           if: ${{ runner.os == 'macOS' }}
           with:
-            args: 7z a -t7z -mx=9 CodeTerminal-macOS-x64.7z ../VSCode-darwin-x64
+            args: 7z a -r -mx=9 CodeTerminal-macOS-x64.7z ../VSCode-darwin-x64
 
         - name: compress app
           uses: edgarrc/action-7z@v1
           if: ${{ runner.os == 'Linux' }}
           with:
-            args: 7z a -t7z -mx=9 CodeTerminal-linux-x64.7z ../VSCode-linux-x64
+            args: 7z a -r -mx=9 CodeTerminal-linux-x64.7z ../VSCode-linux-x64
 
         - name: upload app
           uses: actions/upload-artifact@v2

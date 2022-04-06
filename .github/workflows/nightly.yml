@@ -49,21 +49,27 @@ jobs:
           env:
             GH_TOKEN: ${{ secrets.github_token }}A
 
-        - name: Archive Release
-          uses: thedoctor0/zip-release@master
+        - name: Compress action step
+          uses: a7ul/tar-action@v1.1.0
           if: ${{ runner.os == 'macOS' }}
+          id: compress
           with:
-            type: 'zip'
-            path: '../VSCode-darwin-x64'
-            filename: 'CodeTerminalNightly-macOS.zip'
+            command: c
+            cwd: ./
+            files: |
+              ../VSCode-darwin-x64
+            outPath: CodeTerminalNightly-macOS.tar.gz
 
-        - name: Archive Release
-          uses: thedoctor0/zip-release@master
+        - name: Compress action step
+          uses: a7ul/tar-action@v1.1.0
           if: ${{ runner.os == 'Linux' }}
+          id: compress
           with:
-            type: 'zip'
-            path: '../VSCode-linux-x64'
-            filename: 'CodeTerminalNightly-Linux.zip'
+            command: c
+            cwd: ./
+            files: |
+              ../VSCode-linux-x64
+            outPath: CodeTerminalNightly-Linux.tar.gz
 
         - name: upload app
           uses: actions/upload-artifact@v2
@@ -71,3 +77,4 @@ jobs:
             name: CodeTerminalNightly-${{ runner.OS }}
             path: |
               *.zip
+              *.tar.gz

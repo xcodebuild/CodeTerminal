@@ -55,5 +55,5 @@ jobs:
           with:
             name: CodeTerminalNightly-${{ runner.OS }}
             path: |
+              *.7z
               *.zip
-              *.tar.gz

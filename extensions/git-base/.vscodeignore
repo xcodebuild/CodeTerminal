@@ -1,6 +1,0 @@
-src/**
-build/**
-cgmanifest.json
-extension.webpack.config.js
-tsconfig.json
-

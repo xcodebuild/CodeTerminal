@@ -374,7 +374,7 @@ BUILD_TARGETS.forEach(buildTarget => {
 		const vscodeTask = task.define(`vscode${dashed(platform)}${dashed(arch)}${dashed(minified)}`, task.series(
 			compileBuildTask,
 			compileExtensionsBuildTask,
-			compileExtensionMediaBuildTask,
+			// compileExtensionMediaBuildTask,
 			minified ? minifyVSCodeTask : optimizeVSCodeTask,
 			vscodeTaskCI
 		));

@@ -18,3 +18,22 @@ Or join group.
 
 [Join Telegram Group](https://t.me/+y3WJL1jz2FIyNDI9)
 
+## Configure
+
+Press menubar `CodeTerminal => Preferences => Settings` to reveal `setting.json` in System File Manager. Edit it with your code editor(Visual Studio Code is recommended).
+
+Here is a example:
+
+```
+{
+    "workbench.statusBar.visible": false,
+    "workbench.tips.enabled": false,
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontSize": 16,
+    "editor.fontFamily": "agave Nerd Font Mono"
+}
+```
+
+BTW, you can download `agave Nerd Font Mono` from [here](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Agave/complete).
+

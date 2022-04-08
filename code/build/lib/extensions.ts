@@ -436,11 +436,11 @@ const extensionsPath = path.join(root, 'extensions');
 
 // Additional projects to run esbuild on. These typically build code for webviews
 const esbuildMediaScripts = [
-	'markdown-language-features/esbuild-notebook.js',
-	'markdown-language-features/esbuild-preview.js',
-	'markdown-math/esbuild.js',
-	'notebook-renderers/esbuild.js',
-	'simple-browser/esbuild-preview.js',
+	// 'markdown-language-features/esbuild-notebook.js',
+	// 'markdown-language-features/esbuild-preview.js',
+	// 'markdown-math/esbuild.js',
+	// 'notebook-renderers/esbuild.js',
+	// 'simple-browser/esbuild-preview.js',
 ] as string[];
 
 export async function webpackExtensions(taskName: string, isWatch: boolean, webpackConfigLocations: { configPath: string; outputRoot?: string }[]) {

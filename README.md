@@ -7,6 +7,20 @@ Standalone terminal from Visual Studio Code.
 
 ## Installation
 
+### macOS
+
+Highly recommanded to install with homebrew.
+
+```bash
+brew tap xcodebuild/custom
+brew reinstall --no-quarantine --cask codeterminal
+```
+
+> 部分用户可能需要设置代理，例如 `export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890`
+
+
+### Windows/Linux/macOS
+
 Download from [https://nightly.link/xcodebuild/CodeTerminal/workflows/nightly/main](https://nightly.link/xcodebuild/CodeTerminal/workflows/nightly/main).
 
 Or join group.
@@ -39,10 +53,10 @@ BTW, you can download `agave Nerd Font Mono` from [here](https://github.com/ryan
 
 ## FAQ
 
-### Tips for macOS users 
+### Tips for macOS users
 打开时如果提示文件已损坏，需要执行
 If the prompt file is corrupted when opening, you need to execute
-	
+
 ```shell
 sudo xattr -rd com.apple.quarantine /Applications/CodeTerminal.app
 ```

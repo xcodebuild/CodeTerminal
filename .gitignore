@@ -5,8 +5,8 @@ Thumbs.db
 node_modules/
 .build/
 extensions/**/dist/
-/out*/
-/extensions/**/out/
+/code/out*/
+/code/extensions/**/out/
 build/node_modules
 coverage/
 test_data/
@@ -14,6 +14,6 @@ test-results/
 yarn-error.log
 vscode.lsif
 vscode.db
-/.profile-oss
+code/.profile-oss
 node_modules_arm
 node_modules_x86

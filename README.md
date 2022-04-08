@@ -12,7 +12,7 @@ Download from [https://nightly.link/xcodebuild/CodeTerminal/workflows/nightly/ma
 Or join group.
 
 ## 微信群
-![](https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/e2bda3ff6798bdb24200474f648143c6b3e8655f.jpg_180x180)
+![](https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/e2bda3ff6798bdb24200474f648143c6b3e8655f.jpg_80x80)
 
 ## Telegram Group
 
@@ -37,3 +37,13 @@ Here is a example:
 
 BTW, you can download `agave Nerd Font Mono` from [here](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Agave/complete).
 
+## FAQ
+
+### Tips for macOS users 
+打开时如果提示文件已损坏，需要执行
+If the prompt file is corrupted when opening, you need to execute
+	
+```shell
+sudo xattr -rd com.apple.quarantine /Applications/CodeTerminal.app
+```
+</details>

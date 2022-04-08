@@ -42,7 +42,7 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-Intel.7z ../VSCode-darwin-x64 && rm -rf node_modules && rm -rf ../VSCode-darwin-x64 && git clone https://github.com/xcodebuild/code-terminal-node-module-m1 node_modules && yarn gulp vscode-darwin-arm64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-M1.7z ../VSCode-darwin-arm64
+              yarn && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-Intel.7z ../VSCode-darwin-x64/CodeTerminal.app && rm -rf node_modules && rm -rf ../VSCode-darwin-x64 && git clone https://github.com/xcodebuild/code-terminal-node-module-m1 node_modules && yarn gulp vscode-darwin-arm64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-M1.7z ../VSCode-darwin-arm64/CodeTerminal.app
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
               yarn && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64

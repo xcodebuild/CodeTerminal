@@ -51,9 +51,29 @@ jobs:
             GH_TOKEN: ${{ secrets.github_token }}A
 
         - name: upload app
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v3
           with:
-            name: CodeTerminalNightly-${{ runner.OS }}
+            name: CodeTerminalNightly-Windows
             path: |
-              *.7z
               *.zip
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-Linux
+            path: |
+              CodeTerminalNightly-linux.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-macOS-Intel
+            path: |
+              CodeTerminalNightly-macOS-Intel.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-macOS-M1
+            path: |
+              CodeTerminalNightly-macOS-M1.7z

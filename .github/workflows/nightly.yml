@@ -42,7 +42,7 @@ jobs:
               yarn && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip
             fi
             if [[ "$RUNNER_OS" == "macOS" ]]; then
-              yarn && yarn gulp vscode-darwin-x64-min && rm -rf node_modules && git clone https://github.com/xcodebuild/code-terminal-node-module-m1 node_modules && yarn gulp vscode-darwin-arm64-min && VSCODE_ARCH=universal AGENT_BUILDDIRECTORY=$PWD/.. node build/darwin/create-universal-app.js && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-universal.7z ../VSCode-darwin-universal
+              yarn && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-Intel.7z ../VSCode-darwin-x64 && rm -rf node_modules && rm -rf ../VSCode-darwin-x64 && git clone https://github.com/xcodebuild/code-terminal-node-module-m1 node_modules && yarn gulp vscode-darwin-arm64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-M1.7z ../VSCode-darwin-arm64
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
               yarn && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
@@ -53,7 +53,27 @@ jobs:
         - name: upload app
           uses: actions/upload-artifact@v3
           with:
-            name: CodeTerminalNightly-${{ runner.OS }}
+            name: CodeTerminalNightly-Windows
             path: |
               *.zip
-              *.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-Linux
+            path: |
+              CodeTerminalNightly-linux.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-macOS-Intel
+            path: |
+              CodeTerminalNightly-macOS-Intel.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-macOS-M1
+            path: |
+              CodeTerminalNightly-macOS-M1.7z

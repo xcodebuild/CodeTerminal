@@ -53,9 +53,15 @@ jobs:
         - name: upload app
           uses: actions/upload-artifact@v3
           with:
-            name: CodeTerminalNightly-Windows
+            name: CodeTerminalNightly-Windows-ZIP
             path: |
               code/*.zip
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          with:
+            name: CodeTerminalNightly-Windows-7Z
+            path: |
               code/CodeTerminalNightly-win32-x64.7z
 
         - name: upload app

@@ -52,13 +52,15 @@ jobs:
 
         - name: upload app
           uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Windows' }}
           with:
             name: CodeTerminalNightly-Windows-ZIP
             path: |
-              code/*.zip
+              code/CodeTerminal-win32-x64.zip
 
         - name: upload app
           uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Windows' }}
           with:
             name: CodeTerminalNightly-Windows-7Z
             path: |
@@ -66,6 +68,7 @@ jobs:
 
         - name: upload app
           uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Linux' }}
           with:
             name: CodeTerminalNightly-Linux
             path: |
@@ -73,6 +76,7 @@ jobs:
 
         - name: upload app
           uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'macOS' }}
           with:
             name: CodeTerminalNightly-macOS-Intel
             path: |
@@ -80,6 +84,7 @@ jobs:
 
         - name: upload app
           uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'macOS' }}
           with:
             name: CodeTerminalNightly-macOS-M1
             path: |

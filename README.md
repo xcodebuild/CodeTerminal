@@ -42,7 +42,7 @@ Or join group.
 
 ## Telegram Group
 
-[加入 Telegram Group](https://t.me/+y3WJL1jz2FIyNDI9)
+[Join Telegram Group](https://t.me/+y3WJL1jz2FIyNDI9)
 
 ## Configure
 

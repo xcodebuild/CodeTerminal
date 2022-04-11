@@ -50,11 +50,6 @@ jobs:
           env:
             GH_TOKEN: ${{ secrets.github_token }}
 
-        - uses: edgarrc/action-7z@v1
-          if: ${{ runner.os == 'Windows' }}
-          with:
-            args: 7z a -t7z -mx=9 CodeTerminalNightly-win32-x64.7z ../VSCode-win32-x64
-
         - name: upload app
           uses: actions/upload-artifact@v3
           with:

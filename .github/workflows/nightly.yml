@@ -48,7 +48,12 @@ jobs:
               cd code && yarn && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
             fi
           env:
-            GH_TOKEN: ${{ secrets.github_token }}A
+            GH_TOKEN: ${{ secrets.github_token }}
+
+        - uses: edgarrc/action-7z@v1
+          if: ${{ runner.os == 'Windows' }}
+          with:
+          args: 7z a -t7z -mx=9 CodeTerminalNightly-win32-x64.7z ../VSCode-win32-x64
 
         - name: upload app
           uses: actions/upload-artifact@v3

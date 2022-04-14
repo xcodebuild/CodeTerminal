@@ -1,0 +1,112 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build:
+      strategy:
+        matrix:
+          os: [macos-10.14, macos-10.15, windows-2022, ubuntu-18.04]
+      runs-on: ${{ matrix.os }}
+      steps:
+        - name: Check out Git repository
+          uses: actions/checkout@v1
+          ref: release
+
+        - name: Install Node.js, NPM and Yarn
+          uses: actions/setup-node@v3
+          with:
+            node-version: 14
+
+        - name: Install global deps
+          shell: bash
+          run: |
+            npm install -g cross-zip-cli
+            npm install -g 7zip-bin
+
+        - name: Patch node gyp on Windows
+          if: ${{ runner.os == 'Windows' }}
+          shell: powershell
+          run: |
+            npm install --global node-gyp@latest
+            npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
+
+        - name: Cache Gradle packages
+          uses: actions/cache@v3
+          with:
+            path: |
+              code/node_modules
+            key: ${{ matrix.os }}-build-node_modules-${{ hashFiles('code/package-lock.json') }}
+
+        - name: Install deps
+          if: ${{ matrix.os != 'macos-10.15' }}
+          run: |
+            cd code
+            [[ ! -f node_modules ]] && yarn
+
+        - name: Install deps for ARM macOS
+          if: ${{ matrix.os == 'macos-10.15' }}
+          run: |
+            cd code
+            [[ ! -f node_modules ]] && curl -L https://github.com/xcodebuild/files/releases/download/codeterminal/node_modules.zip > node_modules.zip && unzip node_modules.zip
+
+        - name: build app
+          shell: bash
+          run: |
+            if [[ "$RUNNER_OS" == "Windows" ]]; then
+              cd code && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip &&  $(npm config get prefix)\\node_modules\\7zip-bin\\win\\x64\\7za.exe a -r CodeTerminalNightly-win32-x64.7z ../VSCode-win32-x64
+            fi
+            if [[ "${{ matrix.os }}" == "macos-10.14" ]]; then
+              cd code && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-Intel.7z ../VSCode-darwin-x64/CodeTerminal.app
+            fi
+            if [[ "${{ matrix.os }}" == "macos-10.15" ]]; then
+              cd code && yarn gulp vscode-darwin-arm64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-M1.7z ../VSCode-darwin-arm64/CodeTerminal.app
+            fi
+            if [[ "$RUNNER_OS" == "Linux" ]]; then
+              cd code && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
+            fi
+          env:
+            GH_TOKEN: ${{ secrets.github_token }}
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Windows' }}
+          with:
+            name: CodeTerminalNightly-Windows-ZIP
+            path: |
+              code/CodeTerminal-win32-x64.zip
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Windows' }}
+          with:
+            name: CodeTerminalNightly-Windows-7Z
+            path: |
+              code/CodeTerminalNightly-win32-x64.7z
+
+        - name: upload app
+          uses: actions/upload-artifact@v3
+          if: ${{ runner.os == 'Linux' }}
+          with:
+            name: CodeTerminalNightly-Linux
+            path: |
+              code/CodeTerminalNightly-linux.7z
+
+        - name: upload app for macOS
+          uses: actions/upload-artifact@v3
+          if: ${{ matrix.os == 'macos-10.14' }}
+          with:
+            name: CodeTerminalNightly-macOS-Intel
+            path: |
+              code/CodeTerminalNightly-macOS-Intel.7z
+
+        - name: upload app for macOS ARM
+          uses: actions/upload-artifact@v3
+          if: ${{ matrix.os == 'macos-10.15' }}
+          with:
+            name: CodeTerminalNightly-macOS-M1
+            path: |
+              code/CodeTerminalNightly-macOS-M1.7z

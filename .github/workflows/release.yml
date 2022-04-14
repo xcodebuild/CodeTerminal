@@ -39,8 +39,8 @@ jobs:
           uses: actions/cache@v3
           with:
             path: |
-              code/node_modules
-            key: ${{ matrix.os }}-build-node_modules-${{ hashFiles('code/package-lock.json') }}
+              '**/node_modules'
+            key: ${{ matrix.os }}-build-all_node_modules-${{ hashFiles('code/package.json') }}
 
         - name: Install deps
           if: ${{ matrix.os != 'macos-10.15' }}

@@ -9,7 +9,7 @@ jobs:
   build:
       strategy:
         matrix:
-          os: [macos-10.14, macos-10.15, windows-2022, ubuntu-18.04]
+          os: [macos-11, macos-10.15, windows-2022, ubuntu-18.04]
       runs-on: ${{ matrix.os }}
       steps:
         - name: Check out Git repository
@@ -52,7 +52,7 @@ jobs:
           if: ${{ matrix.os == 'macos-10.15' }}
           run: |
             cd code
-            [[ ! -f node_modules ]] && curl -L https://github.com/xcodebuild/files/releases/download/codeterminal/node_modules.zip > node_modules.zip && unzip node_modules.zip
+            [[ ! -f node_modules ]] && curl -L https://github.com/xcodebuild/files/releases/download/codeterminal/node_modules.zip > node_modules.zip && unzip node_modules
 
         - name: build app
           shell: bash
@@ -60,7 +60,7 @@ jobs:
             if [[ "$RUNNER_OS" == "Windows" ]]; then
               cd code && yarn gulp vscode-win32-x64-min && cross-zip ../VSCode-win32-x64 CodeTerminal-win32-x64.zip &&  $(npm config get prefix)\\node_modules\\7zip-bin\\win\\x64\\7za.exe a -r CodeTerminalNightly-win32-x64.7z ../VSCode-win32-x64
             fi
-            if [[ "${{ matrix.os }}" == "macos-10.14" ]]; then
+            if [[ "${{ matrix.os }}" == "macos-11" ]]; then
               cd code && yarn gulp vscode-darwin-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-Intel.7z ../VSCode-darwin-x64/CodeTerminal.app
             fi
             if [[ "${{ matrix.os }}" == "macos-10.15" ]]; then
@@ -98,7 +98,7 @@ jobs:
 
         - name: upload app for macOS
           uses: actions/upload-artifact@v3
-          if: ${{ matrix.os == 'macos-10.14' }}
+          if: ${{ matrix.os == 'macos-11' }}
           with:
             name: CodeTerminalNightly-macOS-Intel
             path: |

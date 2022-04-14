@@ -14,7 +14,8 @@ jobs:
       steps:
         - name: Check out Git repository
           uses: actions/checkout@v1
-          ref: release
+          with:
+            ref: release
 
         - name: Install Node.js, NPM and Yarn
           uses: actions/setup-node@v3

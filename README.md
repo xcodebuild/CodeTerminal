@@ -1,6 +1,6 @@
 <p align="center">
 <img src="https://images.weserv.nl/?url=https://article.biliimg.com/bfs/article/fb7b025b7d25274ba54957590d6b29ebd8f3ac57.png_120x120"></img>
-	
+
 </p>
 <p align="center">
 <a  href="https://www.producthunt.com/posts/codeterminal?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-codeterminal" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=340636&theme=light" alt="CodeTerminal - Cross&#0032;platform&#0032;terminal&#0032;app&#0032;from&#0032;Visual&#0032;Studio&#0032;Code&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>

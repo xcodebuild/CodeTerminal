@@ -98,11 +98,7 @@ jobs:
 
         - name: upload app for macOS
           uses: actions/upload-artifact@v3
-<<<<<<< HEAD
-          if: ${{ matrix.os == 'macos-10.14' }}
-=======
           if: ${{ matrix.os == 'macos-11' }}
->>>>>>> my
           with:
             name: CodeTerminalNightly-macOS-Intel
             path: |

@@ -66,10 +66,27 @@ BTW, you can download `agave Nerd Font Mono` from [here](https://github.com/ryan
 ## FAQ
 
 ### Tips for macOS users
+
 打开时如果提示文件已损坏，需要执行
+
 If the prompt file is corrupted when opening, you need to execute
 
 ```shell
 sudo xattr -rd com.apple.quarantine /Applications/CodeTerminal.app
 ```
 </details>
+
+### How to install theme(beta)
+
+> Theme Management is not completed yet, but you can still use it.
+> 
+> - The preview of theme(or extension) is not work for now.
+>
+> - You have show/close extension management panel for now.
+
+With `Ctrl(Cmd)+Shift+P` you can run `Extensions: Install Extensions` command to show extension install panel, then search and install theme.
+
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/5436704/164131013-bc55c021-5220-4b60-96fc-fedb2e6e2ba1.png">
+
+
+**After installed you can use `View: Close Primary Side Bar` to close extension side-bar for now.**

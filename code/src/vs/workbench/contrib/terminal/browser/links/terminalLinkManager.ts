@@ -88,7 +88,7 @@ export class TerminalLinkManager extends DisposableStore {
 		this._openers.set(TerminalBuiltinLinkType.LocalFile, localFileOpener);
 		this._openers.set(TerminalBuiltinLinkType.LocalFolderInWorkspace, localFolderInWorkspaceOpener);
 		this._openers.set(TerminalBuiltinLinkType.LocalFolderOutsideWorkspace, this._instantiationService.createInstance(TerminalLocalFolderOutsideWorkspaceLinkOpener));
-		this._openers.set(TerminalBuiltinLinkType.Search, this._instantiationService.createInstance(TerminalSearchLinkOpener, capabilities, localFileOpener, localFolderInWorkspaceOpener, this._processManager.os || OS));
+		this._openers.set(TerminalBuiltinLinkType.Search, this._instantiationService.createInstance(TerminalSearchLinkOpener));
 		this._openers.set(TerminalBuiltinLinkType.Url, this._instantiationService.createInstance(TerminalUrlLinkOpener, !!this._processManager.remoteAuthority));
 
 		this._registerStandardLinkProviders();
@@ -391,6 +391,8 @@ export class TerminalLinkManager extends DisposableStore {
 		if (cached !== undefined) {
 			return cached;
 		}
+
+		this._resolvedLinkCache.set(link, null);
 
 		if (uri) {
 			try {

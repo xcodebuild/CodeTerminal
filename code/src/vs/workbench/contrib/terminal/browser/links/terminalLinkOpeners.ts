@@ -9,24 +9,26 @@ import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { ITerminalLinkOpener, ITerminalSimpleLink } from 'vs/workbench/contrib/terminal/browser/links/links';
 import { ILineColumnInfo } from 'vs/workbench/contrib/terminal/browser/links/terminalLinkManager';
 import { getLocalLinkRegex, lineAndColumnClause, lineAndColumnClauseGroupCount, unixLineAndColumnMatchIndex, winLineAndColumnMatchIndex } from 'vs/workbench/contrib/terminal/browser/links/terminalLocalLinkDetector';
-import * as open from 'open';
 
 
-async function openLink(link: ITerminalSimpleLink) {
+async function openLink(link: ITerminalSimpleLink, openerService: IOpenerService) {
 	if (!link.uri) {
 		throw new Error('Tried to open a url without a resolved URI');
 	}
-	await open(link.uri.toString());
+	await openerService.open(link.uri, {
+		openExternal: true,
+	});
 }
 
 export class TerminalLocalFileLinkOpener implements ITerminalLinkOpener {
 	constructor(
 		private readonly _os: OperatingSystem,
+		@IOpenerService private readonly _openerService: IOpenerService,
 	) {
 	}
 
 	async open(link: ITerminalSimpleLink): Promise<void> {
-		return await openLink(link);
+		return await openLink(link, this._openerService);
 	}
 
 	/**
@@ -77,21 +79,24 @@ export class TerminalLocalFolderInWorkspaceLinkOpener implements ITerminalLinkOp
 }
 
 export class TerminalLocalFolderOutsideWorkspaceLinkOpener implements ITerminalLinkOpener {
-	constructor() {
+	constructor(
+		@IOpenerService private readonly _openerService: IOpenerService,
+	) {
 	}
 
 	async open(link: ITerminalSimpleLink): Promise<void> {
-		return await openLink(link);
+		return await openLink(link, this._openerService);
 	}
 }
 
 export class TerminalSearchLinkOpener implements ITerminalLinkOpener {
 	constructor(
+		@IOpenerService private readonly _openerService: IOpenerService,
 	) {
 	}
 
 	async open(link: ITerminalSimpleLink): Promise<void> {
-		return await openLink(link);
+		return await openLink(link, this._openerService);
 	}
 
 }

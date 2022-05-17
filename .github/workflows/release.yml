@@ -67,7 +67,7 @@ jobs:
               cd code && yarn gulp vscode-darwin-arm64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/mac/x64/7za a -r CodeTerminalNightly-macOS-M1.7z ../VSCode-darwin-arm64/CodeTerminal.app
             fi
             if [[ "$RUNNER_OS" == "Linux" ]]; then
-              cd code && yarn gulp vscode-linux-x64-min && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
+              cd code && yarn && yarn gulp vscode-linux-x64-min && chmod +x $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za && $(npm config get prefix)/lib/node_modules/7zip-bin/linux/x64/7za a -r CodeTerminalNightly-linux.7z ../VSCode-linux-x64
             fi
           env:
             GH_TOKEN: ${{ secrets.github_token }}
